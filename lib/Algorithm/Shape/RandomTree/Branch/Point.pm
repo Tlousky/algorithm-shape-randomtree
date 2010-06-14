@@ -26,7 +26,7 @@ Version 0.01
 
     # Create a point with (X,Y) coordinates of (1,3)
 
-    my $foo = Algorithm::Shape::RandomTree::Branch::Point->new(
+    my $branch_point = Algorithm::Shape::RandomTree::Branch::Point->new(
         x => 1,
         y => 3,
     );

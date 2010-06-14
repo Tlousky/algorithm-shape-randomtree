@@ -41,8 +41,11 @@ __END__
 
 =head1 Algorithm::Shape::RandomTree::Branch
 
-Create an object representing a procedural, editable, randomized plant shape that
-can be rendered graphically by other modules.
+This object contains the attributes necessary to generate a branch, using
+the functions on Algorithm::Shape::RandomTree.
+
+Meant to be used as part of the Algorithm::Shape::RandomTree module and
+not really useful on it's own.
 
 =head1 VERSION
 
@@ -50,25 +53,52 @@ Version 0.01
 
 =head1 SYNOPSIS
 
-Quick summary of what the module does.
+    use Algorithm::Shape::RandomTree::Branch;
 
-Perhaps a little code snippet.
+    my $parent = $tree->branches('b1');  # The parent of the next branch
 
-    use Algorithm::Shape::RandomTree;
+    my $branch = Algorithm::Shape::RandomTree->new(
+        name        => 'b2',
+        start_point => $parent->end_point, 
+        end_point   => $end_point,   # Obj: Algorithm::Shape::RandomTree::Branch::Point
+        dy          => 5,
+        dx          => 5,
+        level       => ( $parent->level + 1 ),
+        width       => ( $parent->width - 1 ),
+        nodulation  => ( $parent->nodulation - 1),
+        complexity  => ( $parent->complexity),
+        path_string => "M $x1 $y1 C 3 3 2 2 $x2 $y2";   # SVG path string
+    );
 
-    my $foo = Algorithm::Shape::RandomTree->new();
-    ...
+=head1 Attributes
 
-=head1 EXPORT
+=head2 name
 
-A list of functions that can be exported.  You can delete this section
-if you don't export anything, such as for a purely object-oriented module.
+=head2 start_point
 
-=head1 SUBROUTINES/METHODS
+A Algorithm::Shape::RandomTree::Branch::Point object
 
-=head2 function1
+=head2 end_point
 
-=head2 function2
+A Algorithm::Shape::RandomTree::Branch::Point object
+
+=head2 dy
+
+=head2 dx
+
+=head2 level
+
+=head2 width
+
+=head2 nodulation
+
+See in Algorithm::Shape::RandomTree
+
+=head2 complexity
+
+See in Algorithm::Shape::RandomTree
+
+=head2 path_string
 
 =head1 AUTHOR
 
