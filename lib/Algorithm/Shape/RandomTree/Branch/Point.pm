@@ -1,4 +1,4 @@
-package Sprout::Branch::Point;
+package Algorithm::Shape::RandomTree::Branch::Point;
 
 use Moose;
 

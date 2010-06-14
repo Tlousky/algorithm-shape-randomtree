@@ -1,11 +1,11 @@
-package Sprout::Branch;
+package Algorithm::Shape::RandomTree::Branch;
 
 use Moose;
-use Sprout::Branch::Point;
+use Algorithm::Shape::RandomTree::Branch::Point;
 
 has 'name' => ( is => 'ro', isa => 'Str' );
 
-has [ 'start_point', 'end_point'  ] => ( is => 'ro', isa => 'Sprout::Branch::Point' );
+has [ 'start_point', 'end_point'  ] => ( is => 'ro', isa => 'Algorithm::Shape::RandomTree::Branch::Point' );
 
 # Deltas: the difference between start and end x and y coordinates
 # reflecting the slope of the branch
@@ -20,7 +20,7 @@ has 'width' => ( is => 'ro', isa => 'Int' );
 # Contains a reference to the parent branch
 has 'parent' => ( is => 'ro', isa => 'Ref' );
 
-# Nodulation: is the attribute which determins whether this branch will
+# Nodulation: is the attribute that determins whether this branch will
 #             continue to create sub-branches
 # Complexity: is the number of sub-branches this branch has if nodulation
 #             is > 0 (otherwise, no new branches will be created on this 
@@ -32,3 +32,5 @@ has [ 'nodulation', 'complexity' ] => ( is => 'ro', isa => 'Int' );
 has 'path_string' => ( is => 'ro', isa => 'Str' );
 
 1;
+
+__END__
