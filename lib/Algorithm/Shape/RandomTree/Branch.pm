@@ -2,10 +2,13 @@ package Algorithm::Shape::RandomTree::Branch;
 
 use Moose;
 use Algorithm::Shape::RandomTree::Branch::Point;
+use namespace::autoclean;
 
 has 'name' => ( is => 'ro', isa => 'Str' );
 
-has [ 'start_point', 'end_point'  ] => ( is => 'ro', isa => 'Algorithm::Shape::RandomTree::Branch::Point' );
+has [ 'start_point', 'end_point'  ] => (
+    is => 'ro', isa => 'Algorithm::Shape::RandomTree::Branch::Point'
+);
 
 # Deltas: the difference between start and end x and y coordinates
 # reflecting the slope of the branch
@@ -30,6 +33,8 @@ has [ 'nodulation', 'complexity' ] => ( is => 'ro', isa => 'Int' );
 # The string representaiton of the params required to create a curved path which will
 # represent the branch
 has 'path_string' => ( is => 'ro', isa => 'Str' );
+
+no Moose;
 
 1;
 
