@@ -4,7 +4,7 @@
 use strict;
 use warnings;
 
-use Sprout::Tree;
+use Algorithm::Shape::RandomTree;
 use SVG;
 
 my $dimention = 400;
@@ -94,7 +94,7 @@ foreach (1..4) {
     my $rand = int rand 999;
     my $output_path = "tree_recur_$rand.svg";
 
-    my $tree = Sprout::Tree->new(
+    my $tree = Algorithm::Shape::RandomTree->new(
         image_width        => $dimention,
         stem_length        => 100,
         tree_width         => 10,

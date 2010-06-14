@@ -399,9 +399,6 @@ sub create_path {
     return $d_str;
 }
 
-
-
-
 1; 
 
 __END__
