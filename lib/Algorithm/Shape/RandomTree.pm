@@ -402,9 +402,8 @@ sub create_path {
 
 __END__
 
-=head1 NAME
+=head1 Algorithm::Shape::RandomTree
 
-Algorithm::Shape::RandomTree -
 Create an object representing a procedural, editable, randomized plant shape that
 can be rendered graphically by other modules.
 
