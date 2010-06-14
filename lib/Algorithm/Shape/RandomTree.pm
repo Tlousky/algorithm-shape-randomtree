@@ -41,18 +41,18 @@ has 'branches' => (
     },
 );   
 
-# These two determin the amount of change in branch length and angle
+# These two determine the amount of change in branch length and angle
 # between branches, and along the whole shape of the tree
 has 'dx_range' => ( is => 'ro', isa => 'Int'  );
 has 'dy_range' => ( is => 'ro', isa => 'Int'  );
 
 has 'verbose'  => ( is => 'ro', isa => 'Bool' );
 
-# Determins whether the tree's shape is more dominated by a single stem with
+# TODO: Determines whether the tree's shape is more dominated by a single stem with
 # shorter and less developed sub-branches, or is highly complex and branching.
 # An apically dominant tree will have one dominant stem with many branches
-# sprouting out of it, throughout it's length. Not yet implemented (I still 
-# need to think how to do this).
+# sprouting out of it, throughout it's length. ** Not yet implemented (I still 
+# need to think how to do this). **
 # The easier model is the non-apically-dominant tree, with modular branches.
 has 'apical_dominance' => ( is => 'ro', isa => 'Int' );
 
@@ -381,7 +381,6 @@ sub create_path {
     my $y1 = $start->y;
     my $x2 = $end->x;
     my $y2 = $end->y;
-    
     
     my $length  = sqrt( $dx ** 2 + $dy ** 2 );
     my $phandle = $self->branch_curve * $length;
