@@ -380,6 +380,8 @@ sub create_path {
 
     ref $start eq 'Algorithm::Shape::RandomTree::Point' or _create_path_help('start point');
     ref $end   eq 'Algorithm::Shape::RandomTree::Point' or _create_path_help('end point');
+    defined is_numeric($dx)                             or _create_path_help('dx');
+    defined is_numeric($dy)                             or _create_path_help('dy');
 
     my $x1 = $start->x;
     my $y1 = $start->y;
