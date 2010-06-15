@@ -56,8 +56,8 @@ is( $result, "success", 'created path string with fully correct params' );
 $startp = 1;
 $endp   = 1;
 
-my $path_str = $tester->create_path( $startp, $endp, $dy, $dx );
-my $result   = check_path_string( $path_str, $startp->x, $startp->y, $endp->x, $endp->y );
+$path_str = $tester->create_path( $startp, $endp, $dy, $dx );
+$result   = check_path_string( $path_str, $startp->x, $startp->y, $endp->x, $endp->y );
 
 isnt( $result, "success", 'failes to create path without start/end point objects' );
 

@@ -406,10 +406,10 @@ sub create_path {
 
 sub _create_path_help {
     my $wrong_param = shift;
-    die "Error in use of 'create_path'. Wrong parameter: $wrong_param\n"                .
-        "Usage: $object->create_path( $start_point, $end_point, $dx, $dy )\n"           .
-        "$start_point and $end_point are Algorithm::Shape::RandomTree::Point objects\n" .
-        "$dx and $dy are integer numbers";
+    die "Error in use of 'create_path'. The wrong parameter is: $wrong_param\n"              .
+        "Usage: " . '$object->create_path( $start_point, $end_point, $dx, $dy );' . "\n"     .
+        '$start_point and $end_point ' . "are Algorithm::Shape::RandomTree::Point objects\n" .
+        '$dx and $dy ' . "are integer numbers";
 }
 
 no Moose;
