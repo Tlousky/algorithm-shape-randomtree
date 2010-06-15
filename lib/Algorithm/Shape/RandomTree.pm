@@ -1,6 +1,7 @@
 package Algorithm::Shape::RandomTree;
 
 use Moose;
+use Data::Validate 'is_numeric';
 use namespace::autoclean;
 
 use Algorithm::Shape::RandomTree::Branch;
@@ -376,7 +377,10 @@ sub calc_new_nodulation {
 
 sub create_path {
     my ( $self, $start, $end, $dx, $dy ) = @_;
-    
+
+    ref $start eq 'Algorithm::Shape::RandomTree::Point' or _create_path_help('start point');
+    ref $end   eq 'Algorithm::Shape::RandomTree::Point' or _create_path_help('end point');
+
     my $x1 = $start->x;
     my $y1 = $start->y;
     my $x2 = $end->x;
@@ -396,6 +400,14 @@ sub create_path {
     my $d_str = "M $x1 $y1 C $c1_x $c1_y $c2_x $c2_y $x2 $y2";
 
     return $d_str;
+}
+
+sub _create_path_help {
+    my $wrong_param = shift;
+    die "Error in use of 'create_path'. Wrong parameter: $wrong_param\n"                .
+        "Usage: $object->create_path( $start_point, $end_point, $dx, $dy )\n"           .
+        "$start_point and $end_point are Algorithm::Shape::RandomTree::Point objects\n" .
+        "$dx and $dy are integer numbers";
 }
 
 no Moose;
