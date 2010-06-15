@@ -1,12 +1,12 @@
 package Algorithm::Shape::RandomTree;
 
 use Moose;
+use namespace::autoclean;
 
 use Algorithm::Shape::RandomTree::Branch;
 use Algorithm::Shape::RandomTree::Branch::Point;
 
 our $VERSION = '0.01';
-
 
 ## Attributes ##
 
@@ -397,6 +397,8 @@ sub create_path {
 
     return $d_str;
 }
+
+no Moose;
 
 1; 
 
