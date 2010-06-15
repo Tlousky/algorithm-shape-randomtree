@@ -39,9 +39,9 @@ has 'path_string' => ( is => 'ro', isa => 'Str' );
 
 __END__
 
-=head1 Algorithm::Shape::RandomTree::Branch
+=head1 NAME
 
-This object contains the attributes necessary to generate a branch, using
+Algorithm::Shape::RandomTree::Branch - This object contains the attributes necessary to generate a branch, using
 the functions on Algorithm::Shape::RandomTree.
 
 Meant to be used as part of the Algorithm::Shape::RandomTree module and

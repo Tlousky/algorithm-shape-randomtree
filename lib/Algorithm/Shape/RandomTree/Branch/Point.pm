@@ -8,9 +8,9 @@ has [ 'x', 'y' ] => ( is => 'ro', isa => 'Int' );
 
 __END__
 
-=head1 Algorithm::Shape::RandomTree::Branch::Point
+=head1 NAME 
 
-Branch point - a 2D point on the geometrical path representing
+Algorithm::Shape::RandomTree::Branch::Point - Branch point - a 2D point on the geometrical path representing
 a RandomTree's branch.
 
 Meant to be used as part of the Algorithm::Shape::RandomTree module and

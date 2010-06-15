@@ -404,9 +404,9 @@ no Moose;
 
 __END__
 
-=head1 Algorithm::Shape::RandomTree
+=head1 NAME 
 
-Create an object representing a procedural, editable, randomized plant shape that
+Algorithm::Shape::RandomTree - Create an object representing a procedural, editable, randomized plant shape that
 can be rendered graphically by other modules.
 
 =head1 VERSION
