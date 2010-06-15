@@ -413,14 +413,7 @@ Version 0.01
 
 =head1 SYNOPSIS
 
-Quick summary of what the module does.
-
-Perhaps a little code snippet.
-
-    use Algorithm::Shape::RandomTree;
-
-    my $foo = Algorithm::Shape::RandomTree->new();
-    ...
+A detailed synopsis with examples will be released soon.
 
 =head1 EXPORT
 
@@ -429,9 +422,25 @@ if you don't export anything, such as for a purely object-oriented module.
 
 =head1 SUBROUTINES/METHODS
 
-=head2 function1
+=head2 calc_new_deltas
 
-=head2 function2
+=head2 calc_new_endpoints
+
+=head2 calc_new_nodulation
+
+=head2 create_branch
+
+=head2 create_branches
+
+=head2 create_branches_recursive
+
+=head2 create_path
+
+=head2 create_stem
+
+=head2 create_tree
+
+=head2 make_branch
 
 =head1 AUTHOR
 
