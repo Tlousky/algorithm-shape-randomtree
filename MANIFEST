@@ -10,7 +10,6 @@ MANIFEST.SKIP
 META.yml
 README
 t/00-load.t
-t/boilerplate.t
 t/manifest.t
 t/pod-coverage.t
 t/pod.t
