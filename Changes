@@ -1,5 +1,10 @@
 Revision history for Algorithm-Shape-RandomTree
 
+0.02
+        * Clean ups
+        * Date::Validate
+        * More tests
+
 0.01    Date/time
         First version.
 

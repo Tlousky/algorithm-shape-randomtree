@@ -2,10 +2,11 @@ package Algorithm::Shape::RandomTree;
 
 use Moose;
 use Data::Validate 'is_numeric';
-use namespace::autoclean;
 
 use Algorithm::Shape::RandomTree::Branch;
 use Algorithm::Shape::RandomTree::Branch::Point;
+
+use namespace::autoclean;
 
 our $VERSION = '0.01';
 
@@ -257,12 +258,12 @@ sub calc_new_deltas {
     # Modifiers range from -range_value to +range_value
     my $dx_modifier = (
         int( rand( $self->dx_range ) * -1 ) + 
-        int( rand( $self->dx_range ) )
+        int( rand( $self->dx_range )      )
     );
 
     my $dy_modifier = (
         int( rand( $self->dy_range ) * -1 ) + 
-        int( rand( $self->dy_range ) )
+        int( rand( $self->dy_range )      )
     );
     
     # If the level is 0, it's the stem's children, so the falloff should be 1.5
@@ -366,8 +367,7 @@ sub calc_new_nodulation {
     my ( $self, $parent ) = @_;
 
     my $verb = $self->verbose;
-
-    my $old = $parent->nodulation;
+    my $old  = $parent->nodulation;
     
     # Reduce ebbing factor from the parent's nodulation
     my $new = $old - $self->ebbing_factor;
@@ -377,11 +377,12 @@ sub calc_new_nodulation {
 
 sub create_path {
     my ( $self, $start, $end, $dx, $dy ) = @_;
+    my $class = 'Algorithm::Shape::RandomTree::Point';
 
-    ref $start eq 'Algorithm::Shape::RandomTree::Point' or _create_path_help('start point');
-    ref $end   eq 'Algorithm::Shape::RandomTree::Point' or _create_path_help('end point');
-    defined is_numeric($dx)                             or _create_path_help('dx');
-    defined is_numeric($dy)                             or _create_path_help('dy');
+    ref $start eq $class    or _create_path_help('start point');
+    ref $end   eq $class    or _create_path_help('end point');
+    defined is_numeric($dx) or _create_path_help('dx');
+    defined is_numeric($dy) or _create_path_help('dy');
 
     my $x1 = $start->x;
     my $y1 = $start->y;

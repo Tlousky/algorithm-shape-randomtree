@@ -1,8 +1,8 @@
 package Algorithm::Shape::RandomTree::Branch;
 
 use Moose;
-
 use Algorithm::Shape::RandomTree::Branch::Point;
+use namespace::autoclean;
 
 has 'name' => ( is => 'ro', isa => 'Str' );
 
@@ -35,14 +35,16 @@ has [ 'nodulation', 'complexity' ] => ( is => 'ro', isa => 'Int' );
 # which will represent the branch's geometry
 has 'path_string' => ( is => 'ro', isa => 'Str' );
 
+no Moose;
+
 1;
 
 __END__
 
 =head1 NAME
 
-Algorithm::Shape::RandomTree::Branch - This object contains the attributes necessary to generate a branch, using
-the functions on Algorithm::Shape::RandomTree.
+Algorithm::Shape::RandomTree::Branch - This object contains the attributes
+necessary to generate an Algorithm::Shape::RandomTree branch.
 
 Meant to be used as part of the Algorithm::Shape::RandomTree module and
 not really useful on it's own.

@@ -1,8 +1,11 @@
 package Algorithm::Shape::RandomTree::Branch::Point;
 
 use Moose;
+use namespace::autoclean;
 
 has [ 'x', 'y' ] => ( is => 'ro', isa => 'Int' );
+
+no Moose;
 
 1;
 
@@ -10,8 +13,8 @@ __END__
 
 =head1 NAME 
 
-Algorithm::Shape::RandomTree::Branch::Point - Branch point - a 2D point on the geometrical path representing
-a RandomTree's branch.
+Algorithm::Shape::RandomTree::Branch::Point - Branch point - a 2D point on the
+geometrical path representing a RandomTree's branch.
 
 Meant to be used as part of the Algorithm::Shape::RandomTree module and
 not really useful on it's own.
