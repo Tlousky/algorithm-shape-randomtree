@@ -2,7 +2,7 @@ Revision history for Algorithm-Shape-RandomTree
 
 0.02
         * Clean ups
-        * Date::Validate
+        * Data::Validate
         * More tests
 
 0.01    15.05.10

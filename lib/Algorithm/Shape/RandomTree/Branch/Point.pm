@@ -82,6 +82,9 @@ L<http://search.cpan.org/dist/Algorithm-Shape-RandomTree/>
 
 =head1 ACKNOWLEDGEMENTS
 
+    The author wishes to thank XSAWYERX for his much appreciated help,
+    without which this module would have been much uglier, and much
+    more bug prone.
 
 =head1 LICENSE AND COPYRIGHT
 

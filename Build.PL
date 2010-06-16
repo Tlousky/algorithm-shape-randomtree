@@ -12,7 +12,7 @@ my $builder = Module::Build->new(
     },
     requires => {
         'Moose'                => 0,
-        'Date::Validate'       => 0,
+        'Data::Validate'       => 0,
         'namespace::autoclean' => 0,
     },
     add_to_cleanup      => [ 'Algorithm-Shape-RandomTree-*' ],
