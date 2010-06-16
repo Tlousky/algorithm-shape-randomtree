@@ -1,0 +1,32 @@
+* calc_new_deltas has a strange algorithm:
+  it uses a modifier to calculate the new branch's deltas, based on the Tree's
+  dy/dx_range attribute (the modifier is basically +/- dy/dx_range), and this
+  value is added (whether positive or negative) to the parent's dx and dy value.
+
+  but another factor, the level is incorporated into the calculation of the new
+  deltas. This makes sense, as the overall length of branches should decrease
+  with the level. So the level +1 becomes the falloff, and the modified dx/dy 
+  is then divided by this falloff.
+
+  with trial and error, I found that a falloff equaling the level exactly is
+  too low, as the first level branches have a length approximately the same 
+  as the stem, which is pretty strange.
+
+  so level + 1 makes sense, and that means the first level branches are approximately
+  half the length of the stem. Since this might be too short, currently a fixed value
+  of 1.5 is given as the falloff of the first level branches.
+
+  The falloff should be determined by the level, and also by some more general
+  morphological attribute of the tree, such as broadness? 
+
+  Also, the falloff increases linearly at the moment. Should it increase exponentially?
+  This will give very interesting results, especially with much more complex trees.
+  I.E. trees will have many more levels, and a very complex branching.
+
+  The complexity needs to be a part of this calculation, as well as calculating
+  the new nodulation in each branch.
+
+  It should use the complexity to add to the nodulation, and to decrease the deltas.
+  
+  This will create the effect I want, in which the complexity affects the general
+  shape of the tree, not only the maximum number of branches.
