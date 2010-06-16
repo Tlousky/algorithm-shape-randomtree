@@ -365,8 +365,10 @@ sub make_branch {
 
 sub calc_new_nodulation {
     my ( $self, $parent ) = @_;
+    my $class = 'Algorithm::Shape::RandomTree::Branch';
 
-    my $verb = $self->verbose;
+    ref $parent eq $class or _calc_new_nodulation_help('parent', $class);
+
     my $old  = $parent->nodulation;
     
     # Reduce ebbing factor from the parent's nodulation
@@ -380,10 +382,10 @@ sub create_path {
     my $class = 'Algorithm::Shape::RandomTree::Branch::Point';
 
     # Validate function parameters
-    ref $start eq $class    or _create_path_help('start point');
-    ref $end   eq $class    or _create_path_help('end point');
-    defined is_numeric($dx) or _create_path_help('dx');
-    defined is_numeric($dy) or _create_path_help('dy');
+    ref $start eq $class    or _create_path_help('start point', $class);
+    ref $end   eq $class    or _create_path_help('end point',   $class);
+    defined is_numeric($dx) or _create_path_help('dx',          $class);
+    defined is_numeric($dy) or _create_path_help('dy',          $class);
 
     my $x1 = $start->x;
     my $y1 = $start->y;
@@ -406,11 +408,18 @@ sub create_path {
     return $d_str;
 }
 
+sub _calc_new_nodulation_help {
+    my ( $wrong_param, $class ) = @_;
+    die "Error in use of 'calc_new_nodulation'. The wrong parameter is: $wrong_param\n" .
+        "Usage: " . '$object->calc_new_nodulation( $parent );' . "\n"                   .
+        '$parent ' . "is an Algorithm::Shape::RandomTree::Branch object\n";
+}
+
 sub _create_path_help {
-    my $wrong_param = shift;
+    my ( $wrong_param, $class ) = @_;
     die "Error in use of 'create_path'. The wrong parameter is: $wrong_param\n"              .
         "Usage: " . '$object->create_path( $start_point, $end_point, $dx, $dy );' . "\n"     .
-        '$start_point and $end_point ' . "are Algorithm::Shape::RandomTree::Point objects\n" .
+        '$start_point and $end_point ' . "are $class objects\n"                              .
         '$dx and $dy ' . "are integer numbers";
 }
 
