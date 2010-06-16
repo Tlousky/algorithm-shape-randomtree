@@ -379,6 +379,7 @@ sub create_path {
     my ( $self, $start, $end, $dx, $dy ) = @_;
     my $class = 'Algorithm::Shape::RandomTree::Branch::Point';
 
+    # Validate function parameters
     ref $start eq $class    or _create_path_help('start point');
     ref $end   eq $class    or _create_path_help('end point');
     defined is_numeric($dx) or _create_path_help('dx');

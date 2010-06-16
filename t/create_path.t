@@ -6,7 +6,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 16;
+use Test::More tests => 20;
 use Test::Exception;
 
 use Algorithm::Shape::RandomTree;
@@ -16,25 +16,14 @@ my $tester = Algorithm::Shape::RandomTree->new(
     branch_curve => 2,
 );
 
-# create_path accepts: ( $self, $start, $end, $dx, $dy )
+## create_path accepts: ( $self, $start, $end, $dx, $dy )
 
-# For each var, except $self, I need to test that the function handles propely:
-# 1. The right value                                  ( that returns the right result )
-# 2. The wrong value                                  (die?)
-# 2. The wrong type (array / hash / object / scalar ) (die?)
-# 3. No value                                         (die?)
-
-# Function-wise, check that it can handle:
-# 4. Too many values             (die? ignore and use first values?)
-# 5. Too few values              (die?)
-# 5. The right number of values  (that give the expected result)
-
-## Test 0: check that we have a value in branch_curve
+## Test 1: check that we have a value in branch_curve
 
 # t1:
 ok( defined $tester->branch_curve, "got a value in the Tree's branch_curve attribute" );
 
-## Test 1: The right result with correct parameters:
+## Test 2: The right result with correct parameters:
 my $startp = Algorithm::Shape::RandomTree::Branch::Point->new(
     x => 1,
     y => 1,
@@ -53,7 +42,7 @@ my $phandle  = $tester->branch_curve * sqrt( $dx ** 2 + $dy ** 2 );
 # Check path string thoroughly, all params included. Total of 11 test:
 my $result   = check_path_string( $path_str, $startp->x, $startp->y, $endp->x, $endp->y, $phandle );
 
-## Test 2: scalars instead of Point objects:
+## Test 3: scalars instead of Point objects:
 $startp = 1;
 
 # t13:
@@ -73,7 +62,7 @@ throws_ok { $tester->create_path( $startp, $endp, $dx, $dy ) }
     qr{^Error in use of 'create_path'. The wrong parameter is: end point},
     'create_path dies with a relevant msg when given a wrong type of end point';
 
-## Test 3: strings instead of numbers in dx and dy
+## Test 4: strings instead of numbers in dx and dy
 
 $endp = Algorithm::Shape::RandomTree::Branch::Point->new(
     x => 2,
@@ -94,6 +83,49 @@ $dy = 'string';
 throws_ok { $tester->create_path( $startp, $endp, $dx, $dy ) }
     qr{^Error in use of 'create_path'. The wrong parameter is: dy},
     'create_path dies with a relevant msg when given a wrong type of dy value';
+
+
+## Test 5: undefined parameters
+
+$dy     = 2;
+$startp = undef;
+
+# t17:
+throws_ok { $tester->create_path( $startp, $endp, $dx, $dy ) }
+    qr{^Error in use of 'create_path'. The wrong parameter is: start point},
+    'create_path dies with a relevant msg when given undef as start point';
+
+$startp = Algorithm::Shape::RandomTree::Branch::Point->new(
+    x => 1,
+    y => 1,
+);
+
+$endp = undef;
+
+# t18:
+throws_ok { $tester->create_path( $startp, $endp, $dx, $dy ) }
+    qr{^Error in use of 'create_path'. The wrong parameter is: end point},
+    'create_path dies with a relevant msg when given undef as end point';
+
+$endp = Algorithm::Shape::RandomTree::Branch::Point->new(
+    x => 2,
+    y => 2,
+);
+
+$dx = undef;
+
+# t19:
+throws_ok { $tester->create_path( $startp, $endp, $dx, $dy ) }
+    qr{^Error in use of 'create_path'. The wrong parameter is: dx},
+    'create_path dies with a relevant msg when given undef as dx';
+
+$dx = 2;
+$dy = undef;
+
+# t20:
+throws_ok { $tester->create_path( $startp, $endp, $dx, $dy ) }
+    qr{^Error in use of 'create_path'. The wrong parameter is: dy},
+    'create_path dies with a relevant msg when given undef as dy';
 
 
 
