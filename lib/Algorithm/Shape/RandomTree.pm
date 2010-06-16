@@ -281,6 +281,12 @@ sub calc_new_deltas {
 # Calculate New End-points: ( by adding the deltas to the start-points )
 sub calc_new_endpoints {
     my ( $self, $start_point, $dx, $dy ) = @_;
+    my $class = 'Algorithm::Shape::RandomTree::Branch::Point';
+
+    # Validate function parameters
+    ref $start_point eq $class or _calc_new_endpoints_help( 'start point', $class );
+    defined is_numeric($dx)    or _calc_new_endpoints_help( 'dx',          $class );
+    defined is_numeric($dy)    or _calc_new_endpoints_help( 'dy',          $class );
 
     my $x_end = $dx + $start_point->x;
     my $y_end = $dy + $start_point->y;
@@ -367,6 +373,7 @@ sub calc_new_nodulation {
     my ( $self, $parent ) = @_;
     my $class = 'Algorithm::Shape::RandomTree::Branch';
 
+    # Validate parent parameter
     ref $parent eq $class or _calc_new_nodulation_help('parent', $class);
 
     my $old  = $parent->nodulation;
@@ -406,6 +413,15 @@ sub create_path {
     my $d_str = "M $x1 $y1 C $c1_x $c1_y $c2_x $c2_y $x2 $y2";
 
     return $d_str;
+}
+
+
+sub _calc_new_endpoints_help {
+    my ( $wrong_param, $class ) = @_;
+    die "Error in use of 'calc_new_endpoints'. The wrong parameter is: $wrong_param\n"  .
+        "Usage: " . '$object->calc_new_endpoints( $start_point, $dx, $dy );' . "\n"     .
+        '$start_point ' . "is a $class object\n"                                        .
+        '$dx and $dy ' . "are integer numbers";
 }
 
 sub _calc_new_nodulation_help {

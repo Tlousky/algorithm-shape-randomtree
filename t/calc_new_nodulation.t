@@ -46,14 +46,14 @@ is( $result, $correct_new_nodulation, 'correct calculation of new nodulation val
 
 $test_branch = 1;
 
-#t5
+# t5:
 throws_ok { $tester->calc_new_nodulation( $test_branch ) }
     qr{^Error in use of 'calc_new_nodulation'. The wrong parameter is: parent},
     'calc_new_nodulation dies with a relevant msg when given a wrong type of parent';
     
 $test_branch = undef;
 
-#6
+# t6:
 throws_ok { $tester->calc_new_nodulation( $test_branch ) }
     qr{^Error in use of 'calc_new_nodulation'. The wrong parameter is: parent},
     'calc_new_nodulation dies with a relevant msg when given undef as parent';
