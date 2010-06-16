@@ -1,9 +1,14 @@
 Revision history for Algorithm-Shape-RandomTree
 
+0.03    
+        * Imporved API ( 5-6 params instead of 12 )
+        * Extensive documentation
+
 0.02
         * Clean ups
         * Data::Validate
-        * More tests
+        * Tests covering the whole of RandomTree.pm
+        * Replacing hardcoded hacks with better logics
 
 0.01    15.05.10
         * It's out, finally!

@@ -9,7 +9,7 @@ use Test::More tests => 6;
 use Test::Exception;
 
 use Algorithm::Shape::RandomTree;
-use Algorithm::Shape::RandomTree::Branch::Point;
+use Algorithm::Shape::RandomTree::Branch;
 
 ## calc_new_nodulation accepts: ( $parent ) 
 ## and requires the RandomTree attributes: nodulation, ebbing_factor

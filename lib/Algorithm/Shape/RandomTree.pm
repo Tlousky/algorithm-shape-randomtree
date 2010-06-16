@@ -239,14 +239,12 @@ sub create_branch {
     $self->add_branch( $newbranch );
 }
 
-
 # Calculate New Deltas: uses the parent branch's attributes and random factors
 # to modify a new branche's dx and dy values, who determin the angle and length
 # of the new branch.
 sub calc_new_deltas {
     my ( $self, $parent ) = @_;
-
-    my $verb = $self->verbose;
+    my $class = 'Algorithm::Shape::RandomTree::Branch';
 
     # Get parent branch's deltas
     my $old_dx = $parent->dx;
