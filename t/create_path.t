@@ -5,7 +5,10 @@
 
 use strict;
 use warnings;
-use Test::More tests => 2;
+
+use Test::More tests => 13;
+use Test::Exception;
+
 use Algorithm::Shape::RandomTree;
 use Algorithm::Shape::RandomTree::Branch::Point;
 
@@ -42,28 +45,21 @@ my $endp   = Algorithm::Shape::RandomTree::Branch::Point->new(
 
 my ( $dx, $dy ) = ( 2, 2 );
 
-my $phandle = $tester->branch_curve * sqrt( $dx ** 2 + $dy ** 2 );
-
 my $path_str = $tester->create_path( $startp, $endp, $dy, $dx );
+my $phandle  = $tester->branch_curve * sqrt( $dx ** 2 + $dy ** 2 );
 
+# Check path string thoroughly, all params included. Total of 11 test:
 my $result   = check_path_string( $path_str, $startp->x, $startp->y, $endp->x, $endp->y, $phandle );
 
-is( $result, "success", 'created path string with fully correct params' );
-# TODO: 
-# Split this test to 10 tests,
-# instead of checking the whole string, check each of the params
-# Including that we get the "M" and "C" flags,
-# And that the control point coordinates are in the proper range:
-# which is defined in the actual function
-
 ## Test 2: scalars instead of objects:
-#$startp = 1;
-#$endp   = 1;
-#
-#$path_str = $tester->create_path( $startp, $endp, $dy, $dx );
-#$result   = check_path_string( $path_str, $startp->x, $startp->y, $endp->x, $endp->y );
-#
-#isnt( $result, "success", 'failes to create path without start/end point objects' );
+$startp = 1;
+
+throws_ok { $tester->create_path( $startp, $endp, $dy, $dx ) }
+    qr{^Error in use of 'create_path'. The wrong parameter is: start point},
+    'create_path dies when given a wrong type of start point';
+
+$endp   = 1;
+
 
 sub check_path_string {
     
@@ -71,30 +67,37 @@ sub check_path_string {
     # The SVG path string format:
     # M x1 y1 C cx1 cy1 cx2 cy2 x2 y2
 
-    if ( $str =~ /^
-                  M
-                  \s(\d+)  # $1
-                  \s(\d+)  # $2
-                  \sC
-                  \s(.+)   # $3
-                  \s(.+)   # $4
-                  \s(.+)   # $5
-                  \s(.+)   # $6
-                  \s(\d+)  # $7
-                  \s(\d+)  # $8
+    my $match = 1 if ( $str =~ /^
+                  (M)      # $1  => M
+                  \s(\d+)  # $2  => x1
+                  \s(\d+)  # $3  => y1
+                  \s(C)    # $4  => C
+                  \s(.+)   # $5  => cx1
+                  \s(.+)   # $6  => cy1
+                  \s(.+)   # $7  => cx2
+                  \s(.+)   # $8  => cy2
+                  \s(\d+)  # $9  => x2
+                  \s(\d+)  # $10 => y2
                   $/x 
-       ) {
-        ( $1 == $x1 ) || return "failed x1 comparison";
-        ( $2 == $y1 ) || return "failed y1 comparison";
-        ( $7 == $x2 ) || return "failed x2 comparison";
-        ( $8 == $y2 ) || return "failed y2 comparison";
-        return "cx1 out of range" if ( ( $3 > $phandle ) or ( $3 < ( $phandle * -1 ) ) );
-        return "cy1 out of range" if ( ( $4 > $phandle ) or ( $4 < ( $phandle * -1 ) ) );
-        return "cx2 out of range" if ( ( $5 > $phandle ) or ( $5 < ( $phandle * -1 ) ) );
-        return "cx2 out of range" if ( ( $6 > $phandle ) or ( $6 < ( $phandle * -1 ) ) );
-        
-        return "success";
-    }
-    
-    return "failed path format regex";
+    );
+       
+    ok( $match, 'Got a properly formatted path string' );
+
+    is( $1,  'M', 'Got M flag in path string' );
+    is( $2,  $x1, 'Correct x1 in path string' );
+    is( $3,  $y1, 'Correct y1 in path string' );
+    is( $4,  'C', 'Got C flag in path string' );
+    is( $9,  $x2, 'Correct x2 in path string' );
+    is( $10, $y2, 'Correct y2 in path string' );
+
+    my $cx1_in_range = 1 if ( ( $5 < $phandle ) and ( $5 > ( $phandle * -1 ) ) );
+    my $cy1_in_range = 1 if ( ( $6 < $phandle ) and ( $6 > ( $phandle * -1 ) ) );
+    my $cx2_in_range = 1 if ( ( $7 < $phandle ) and ( $7 > ( $phandle * -1 ) ) );
+    my $cy2_in_range = 1 if ( ( $8 < $phandle ) and ( $8 > ( $phandle * -1 ) ) );
+
+    ok( $cx1_in_range, "cx1's value in proper range" );
+    ok( $cy1_in_range, "cy1's value in proper range" );
+    ok( $cx2_in_range, "cx2's value in proper range" );
+    ok( $cy2_in_range, "cy2's value in proper range" );
+
 }
