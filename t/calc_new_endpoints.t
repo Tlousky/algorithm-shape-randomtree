@@ -15,7 +15,7 @@ use Algorithm::Shape::RandomTree::Branch::Point;
 
 my $tester = Algorithm::Shape::RandomTree->new();
 
-## Test 1: succeed in calculating new endpoint with correct params
+## Test 1: Calculating new endpoint with correct params
 
 my $startp = Algorithm::Shape::RandomTree::Branch::Point->new(
     x => 1,
@@ -35,7 +35,7 @@ is( $retur_x_end, $x_end, 'Calculated correct endpoint.x value' );
 # t2:
 is( $retur_y_end, $y_end, 'Calculated correct endpoint.y value' );
 
-## Test 2: wrong type of start point or undef value
+## Test 2: Wrong type of start point or undef value
 
 $startp = 1;
 
@@ -51,7 +51,7 @@ throws_ok { $tester->calc_new_endpoints( $startp, $dx, $dy ) }
     qr{^Error in use of 'calc_new_endpoints'. The wrong parameter is: start point},
     'calc_new_enpoints dies with a relevant msg when given undef as a start point';
     
-## Test 3: wrong or undef dx and dy values
+## Test 3: Wrong or undef dx and dy values
 
 $startp = Algorithm::Shape::RandomTree::Branch::Point->new(
     x => 1,

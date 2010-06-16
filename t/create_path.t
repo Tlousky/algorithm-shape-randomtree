@@ -42,7 +42,7 @@ my $phandle  = $tester->branch_curve * sqrt( $dx ** 2 + $dy ** 2 );
 # Check path string thoroughly, all params included. Total of 11 test:
 my $result   = check_path_string( $path_str, $startp->x, $startp->y, $endp->x, $endp->y, $phandle );
 
-## Test 3: scalars instead of Point objects:
+## Test 3: Scalars instead of Point objects:
 $startp = 1;
 
 # t13:
@@ -62,7 +62,7 @@ throws_ok { $tester->create_path( $startp, $endp, $dx, $dy ) }
     qr{^Error in use of 'create_path'. The wrong parameter is: end point},
     'create_path dies with a relevant msg when given a wrong type of end point';
 
-## Test 4: strings instead of numbers in dx and dy
+## Test 4: Strings instead of numbers in dx and dy
 
 $endp = Algorithm::Shape::RandomTree::Branch::Point->new(
     x => 2,
@@ -85,7 +85,7 @@ throws_ok { $tester->create_path( $startp, $endp, $dx, $dy ) }
     'create_path dies with a relevant msg when given a wrong type of dy value';
 
 
-## Test 5: undefined parameters
+## Test 5: Undefined parameters
 
 $dy     = 2;
 $startp = undef;
