@@ -5,7 +5,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 15;
+use Test::More tests => 10;
 use Test::Exception;
 
 use Algorithm::Shape::RandomTree;
@@ -59,3 +59,13 @@ ok( defined $new_dy, "a new dy value has been calculated" );
 
 # t9:
 ok( $new_dy < $parent->dy, "The new dy value is smaller than the parent's dx" );
+
+## Test 3: getting death with totally wrong params
+
+# t10:
+
+$parent = 1;
+
+throws_ok { $tester->calc_new_deltas( $parent ) }
+    qr{^Error in use of 'calc_new_deltas'. The wrong parameter is: parent},
+    'calc_new_deltas dies with a relevant msg when given a wrong type of parent';

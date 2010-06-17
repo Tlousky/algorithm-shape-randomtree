@@ -246,6 +246,8 @@ sub calc_new_deltas {
     my ( $self, $parent ) = @_;
     my $class = 'Algorithm::Shape::RandomTree::Branch';
 
+    ref $parent eq $class or _calc_new_deltas_help( 'parent', $class );
+
     # Get parent branch's deltas
     my $old_dx = $parent->dx;
     my $old_dy = $parent->dy;
@@ -413,6 +415,12 @@ sub create_path {
     return $d_str;
 }
 
+sub _calc_new_deltas_help {
+    my ( $wrong_param, $class ) = @_;
+    die "Error in use of 'calc_new_deltas'. The wrong parameter is: $wrong_param\n" .
+        "Usage: " . '$object->calc_new_deltas( $parent );' . "\n"                   .
+        '$parent ' . "is an $class object\n";
+}
 
 sub _calc_new_endpoints_help {
     my ( $wrong_param, $class ) = @_;
@@ -426,7 +434,7 @@ sub _calc_new_nodulation_help {
     my ( $wrong_param, $class ) = @_;
     die "Error in use of 'calc_new_nodulation'. The wrong parameter is: $wrong_param\n" .
         "Usage: " . '$object->calc_new_nodulation( $parent );' . "\n"                   .
-        '$parent ' . "is an Algorithm::Shape::RandomTree::Branch object\n";
+        '$parent ' . "is an $class object\n";
 }
 
 sub _create_path_help {
