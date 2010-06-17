@@ -149,6 +149,9 @@ sub create_stem {
     my $d = $self->stem_length;
     
     # Set stem slope ( currently it's stragight up - slope = 0 )
+    # TODO: this should actually be calculated according to the Tree's
+    #       stem_curve attribute.
+
     my $m = 0;
     # To set the slope to a random number between -/+0.5:
     # my $m = -0.5 + rand(1);
@@ -215,9 +218,7 @@ sub create_branch {
     my $verb = $self->verbose;
 
     my ( $dx, $dy )       = $self->calc_new_deltas( $parent );
-    my ( $x_end, $y_end ) = $self->calc_new_endpoints(
-        $start_point, $dx, $dy
-    );
+    my ( $x_end, $y_end ) = $self->calc_new_endpoints( $start_point, $dx, $dy );
 
     my $end_point = Algorithm::Shape::RandomTree::Branch::Point->new(
         x => $x_end, y => $y_end 
@@ -232,8 +233,6 @@ sub create_branch {
         dy          => $dy,
         level       => $level,
         parent      => $parent,
-#       nodulation  => ,
-#       complexity  => ,
     );
 
     $self->add_branch( $newbranch );
@@ -328,12 +327,11 @@ sub make_branch {
     $verb && print "[make_branche] on parent: $name\n";
 
     my ( $dx, $dy )       = $self->calc_new_deltas( $parent );
-    my ( $x_end, $y_end ) = $self->calc_new_endpoints(
-        $start_point, $dx, $dy
-    );
+    my ( $x_end, $y_end ) = $self->calc_new_endpoints( $start_point, $dx, $dy );
 
-    my $end_point  = Algorithm::Shape::RandomTree::Branch::Point->new(
-        x => $x_end, y => $y_end
+    my $end_point = Algorithm::Shape::RandomTree::Branch::Point->new(
+        x => $x_end, 
+        y => $y_end,
     );
 
     my $number     = $self->count_branches + 1;        # New branch's num (name)
