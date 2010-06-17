@@ -264,7 +264,7 @@ sub calc_new_deltas {
         int( rand( $self->dy_range )      )
     );
     
-    # If the level is 0, it's the stem's children, so the falloff should be 1.5
+    # If the level is 0, it's the stem's direct children, so the falloff should be 1.5
     # (so that they would still be a bit shorter than the stem).
     # otherwise, it should be the level + 1
     my $falloff = ( $parent->level == 0 ) ? 1.5 : $parent->level + 1;

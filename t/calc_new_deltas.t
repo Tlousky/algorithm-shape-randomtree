@@ -44,4 +44,18 @@ ok( defined $parent->dy, "got a value in the Parent's dy attribute" );
 ok( defined $parent->level, "got a value in the Parent's level attribute" );
 
 
-## Test 2: succeed in 
+## Test 2: getting the right output with correct params
+
+my ( $new_dx, $new_dy ) = $tester->calc_new_deltas( $parent );
+
+# t6:
+ok( defined $new_dx, "a new dx value has been calculated" );
+
+# t7:
+ok( $new_dx < $parent->dx, "The new dx value is smaller than the parent's dx" );
+
+# t8:
+ok( defined $new_dy, "a new dy value has been calculated" );
+
+# t9:
+ok( $new_dy < $parent->dy, "The new dy value is smaller than the parent's dx" );

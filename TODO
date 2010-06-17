@@ -30,3 +30,5 @@
   
   This will create the effect I want, in which the complexity affects the general
   shape of the tree, not only the maximum number of branches.
+
+* I need to make all attributes in the RandomTree, Branch and Point object required (mandatory).
