@@ -1,34 +1,73 @@
-* calc_new_deltas has a strange algorithm:
-  it uses a modifier to calculate the new branch's deltas, based on the Tree's
-  dy/dx_range attribute (the modifier is basically +/- dy/dx_range), and this
-  value is added (whether positive or negative) to the parent's dx and dy value.
+Functions Tested:
+    create_tree                 
+    create_branches             
+    create_stem                 V
+    create_branch               
+    calc_new_deltas             V
+    calc_new_endpoints          V
+    create_branches_recursive   
+    make_branch                 
+    calc_new_nodulation         V
+    create_path                 V
 
-  but another factor, the level is incorporated into the calculation of the new
-  deltas. This makes sense, as the overall length of branches should decrease
-  with the level. So the level +1 becomes the falloff, and the modified dx/dy 
-  is then divided by this falloff.
+Functions that need improved algorithms:
+    calc_new_deltas             * Improved calculation of new deltas. Incorporate
+                                complexity in calculation of dx falloff.
+                                use level in conjugation with complexity.
 
-  with trial and error, I found that a falloff equaling the level exactly is
-  too low, as the first level branches have a length approximately the same 
-  as the stem, which is pretty strange.
+    make_branch                 * Improve calculation of new width. Falloff algorithm
+                                is identical to that of calc_new_deltas. Probably
+                                not flexible, or general enough.
 
-  so level + 1 makes sense, and that means the first level branches are approximately
-  half the length of the stem. Since this might be too short, currently a fixed value
-  of 1.5 is given as the falloff of the first level branches.
+                                * Complexity is randomly calculated for each branch.
+                                The nodulation changes (drops) as well.
+                                Something here is not quite right. One of these parameters
+                                should stay constant, but it's effect should reduce with 
+                                the level perhaps, or randomly calculated.
+                                If the complexity is the exact number of children branches
+                                that every branch has, than I should change THAT. I can
+                                randomly calculate how many children a branch has in the
+                                create_branches* functions, rather than randomly change
+                                the complexity itself and reduce it as a result.
 
-  The falloff should be determined by the level, and also by some more general
-  morphological attribute of the tree, such as broadness? 
+    create_branches_recursive   * This is exactly what I was talking about in the above
+                                point.
+                                * Also, there's a strange algorithm deciding how many
+                                children a certain branch has. The question of whether
+                                a branch has any children at all depends on it's nodulation
+                                value. But the number of it's children is the same as it's
+                                complexity value. This just proves that I interchange, mix
+                                and confuse between complexity and nodulation, that one of 
+                                them is redundant, and that I need to kill one of them and
+                                exclusively use the other (I think I'll kill the nodulation).
 
-  Also, the falloff increases linearly at the moment. Should it increase exponentially?
-  This will give very interesting results, especially with much more complex trees.
-  I.E. trees will have many more levels, and a very complex branching.
+    create_tree                 I'm calling 'create_branches_recursive' on the stem branch
+                                several times (the number of which is the complexity
+                                value). But inside 'create_branches_recursive', it also
+                                call itself (recursively) several times (according to the
+                                complexity, again). So in effect, 'create_branches_recursive'
+                                is called complexity**2 times. This is strange to say the least.
+                                I should probably remove the foreach loop from 'create_tree'.
+                                The results might be unexpected, and I might need to make
+                                adjustments to the complexity value or the general algorithm
+                                (something that needs to be done anyway).
 
-  The complexity needs to be a part of this calculation, as well as calculating
-  the new nodulation in each branch.
+General refactoring:
+* complexity and nodulation - I think these two attributes are pretty synonymous, or 
+  should have been. It's pretty redundant and the algorithm for determining the number
+  of sub-branches each branch has, and the reduction in this value with level, is
+  unnecessarily complicated. I should probably use just one of these factors, and
+  reduce it with level, or use the level to decide its influence.
 
-  It should use the complexity to add to the nodulation, and to decrease the deltas.
-  
-  This will create the effect I want, in which the complexity affects the general
-  shape of the tree, not only the maximum number of branches.
+  -Perhaps complexity should be a global attribute of the Tree- while 
+  -nodulation will be a localized Branch's attribute- reflecting the complexity and
+  it's reduction with the level.
 
-* I need to make all attributes in the RandomTree, Branch and Point object required (mandatory).
+* create_tree calls 'create_branches_recursive' several times (1 .. complexity):
+Now here's something peculiar. I thought create_branches_recursive creates all the children
+at once... Apparently, it's being called once for each of the primary branches (level 1 branches,
+direct children of the stem).
+Each time, it's being called with the stem as the only parameter, and nothing else really. So...
+essentally, the stem creates several sub-children, a whole lot more than what you'd expect by the
+value of the complexity. Actually it's the complexity**2.
+
