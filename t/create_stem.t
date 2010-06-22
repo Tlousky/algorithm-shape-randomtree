@@ -45,7 +45,7 @@ my $stem = $tester->create_stem();
 # t6:
 is( 
     ref $stem,
-    "lgorithm::Shape::RandomTree::Branch",
+    "Algorithm::Shape::RandomTree::Branch",
     "create_stem returns the right type of object"
 );
 
