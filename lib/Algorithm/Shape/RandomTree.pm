@@ -70,7 +70,23 @@ sub create_tree {
     my $verb = $self->verbose;
     
     $verb && print "[create_tree] Starting\n";
-    $verb && print "[create_tree] algorithm is $self->creation_algorithm\n";
+
+    # Validate complexity
+    define $self->complexity or 
+        _create_tree_help( 'Missing parameter', 'complexity' );
+    defined is_numeric( $self->complexity ) or 
+        _create_tree_help( 'Wrong non-numeric value', 'complexity' );
+
+    # Validate nodulation
+    define $self->nodulation or 
+        _create_tree_help( 'Missing parameter', 'nodulation' );
+    defined is_numeric( $self->nodulation ) or 
+        _create_tree_help( 'Wrong non-numeric value', 'nodulation' );
+
+    $verb && $self->creation_algorithm &&
+        print "[create_tree] algorithm is $self->creation_algorithm\n";
+    $verb && ( ! $self->creation_algorithm ) &&
+        print "[create_tree] no creation algorithm given, using linear as default\n";
 
     if ( $self->creation_algorithm eq 'recursive' ) {
         # Create main stem
@@ -87,12 +103,9 @@ sub create_tree {
 
     } else {
         
-       # Set number of branching levels
-        my $levels = $self->nodulation;
-        
         $verb && print "[create_tree] creating $levels levels\n";
         
-        foreach my $level ( 0 .. $levels ) {
+        foreach my $level ( 0 .. $self->nodulation ) {
             $verb && print "[create_tree] \t creating level $level\n";
             $self->create_branches( $level );
         }        
@@ -309,7 +322,7 @@ sub create_branches_recursive {
     if ( $branch->nodulation ) {
         foreach my $idx ( 1 .. $branch->complexity ) {
             $verb && print qq{
-                [create_branches_recursive] \tcreating $name 's branches\n
+                [create_branches_recursive] \tcreating $name's branches\n
             };
             $self->create_branches_recursive( $branch );
         }
@@ -443,6 +456,11 @@ sub _create_path_help {
         '$dx and $dy ' . "are integer numbers";
 }
 
+sub _create_tree_help {
+    my ( $error, $param ) = @_;
+    die "Error in use of 'create_tree'. $error: $param\n";
+}
+
 no Moose;
 
 1; 
@@ -451,8 +469,8 @@ __END__
 
 =head1 NAME 
 
-Algorithm::Shape::RandomTree - Create an object representing a procedural, editable, randomized plant shape that
-can be rendered graphically by other modules.
+Algorithm::Shape::RandomTree - Create an object representing a procedural, editable,
+randomized plant shape that can be rendered graphically by other modules.
 
 =head1 VERSION
 

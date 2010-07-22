@@ -71,3 +71,5 @@ Each time, it's being called with the stem as the only parameter, and nothing el
 essentally, the stem creates several sub-children, a whole lot more than what you'd expect by the
 value of the complexity. Actually it's the complexity**2.
 
+* According to create_tree, nodulation is the number of levels (used thus in the linear algorithm)
+while complexity is the number of children branches.
