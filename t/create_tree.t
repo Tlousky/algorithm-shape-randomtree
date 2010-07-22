@@ -5,7 +5,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 15;
+use Test::More tests => 3;
 use Test::Exception;
 
 use Algorithm::Shape::RandomTree;
@@ -14,7 +14,7 @@ use Algorithm::Shape::RandomTree::Branch::Point;
 
 ## create_stem(); doesn't accept any input
 
-## It requires the RandomTree attributes: creation_algorithm, complexity, nodulation
+## It requires the RandomTree attributes: complexity, nodulation
 ## It also calls these functions: create_stem, create_branches_recursive, create_branches
 
 ## create_stem               returns a branch object, the stem branch
@@ -64,15 +64,15 @@ my $create_branches_recursive_counter = 0;
             complexity  => 5,
             width       => 2,
         ); 
-    }
+    };
 
     *Algorithm::Shape::RandomTree::create_branches = sub {
         $create_branches_counter++;
-    }
+    };
 
     *Algorithm::Shape::RandomTree::create_branches_recursive = sub {
         $create_branches_recursive_counter++;
-    }
+    };
     
 }
 
@@ -98,3 +98,10 @@ $tester = Algorithm::Shape::RandomTree->new( complexity => 10 );
 throws_ok { $tester->create_tree(); }
     qr{^Error in use of 'create_tree'. Missing parameter: nodulation},
     'create_tree dies with a relevant msg when nodulation is missing';
+    
+## Test 2: make sure the default is the linear algorithm
+
+## Test 3: make sure the linear algorithm is active and works ok when explicitly chosen
+
+## Test 4: make sure the recursive algorithm is active and works ok when chosen
+

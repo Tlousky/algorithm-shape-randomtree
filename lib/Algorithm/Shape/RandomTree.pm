@@ -72,13 +72,13 @@ sub create_tree {
     $verb && print "[create_tree] Starting\n";
 
     # Validate complexity
-    define $self->complexity or 
+    defined $self->complexity or 
         _create_tree_help( 'Missing parameter', 'complexity' );
     defined is_numeric( $self->complexity ) or 
         _create_tree_help( 'Wrong non-numeric value', 'complexity' );
 
     # Validate nodulation
-    define $self->nodulation or 
+    defined $self->nodulation or 
         _create_tree_help( 'Missing parameter', 'nodulation' );
     defined is_numeric( $self->nodulation ) or 
         _create_tree_help( 'Wrong non-numeric value', 'nodulation' );
@@ -102,8 +102,6 @@ sub create_tree {
         }
 
     } else {
-        
-        $verb && print "[create_tree] creating $levels levels\n";
         
         foreach my $level ( 0 .. $self->nodulation ) {
             $verb && print "[create_tree] \t creating level $level\n";
